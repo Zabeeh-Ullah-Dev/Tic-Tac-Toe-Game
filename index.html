@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#F6F0E6">
+    <meta name="description" content="A considered little game of noughts and crosses. Play a friend or the house.">
+    <title>The Ninth Square — A game of noughts &amp; crosses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="masthead">
+        <a class="wordmark" href="#top" aria-label="The Ninth Square home">
+          <span class="wordmark-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span>THE NINTH SQUARE</span>
+        </a>
+        <p class="masthead-note">A little friendly rivalry</p>
+        <button class="text-button sound-toggle" id="sound-toggle" type="button" aria-pressed="false">
+          <svg class="sound-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8v4h3l4 3V5L6 8H3Z"/><path class="sound-wave" d="M13 7a4 4 0 0 1 0 6m2-8a7 7 0 0 1 0 10"/></svg>
+          Sound <span id="sound-state">off</span>
+        </button>
+      </header>
+
+      <main id="top">
+        <section class="game-intro" aria-labelledby="page-title">
+          <div>
+            <h1 id="page-title">Noughts <em>&amp;</em> Crosses</h1>
+            <p class="intro-copy">Nine little squares. Plenty of room for a rematch.</p>
+          </div>
+        </section>
+
+        <section class="game-layout" aria-label="Tic-tac-toe game">
+          <div class="play-area">
+            <div class="game-bar">
+              <p class="turn-indicator" id="turn-indicator"><span class="turn-mark" id="turn-mark" aria-hidden="true"><span class="turn-glyph-x">×</span><span class="turn-glyph-o"></span></span><span id="turn-copy">Player X to move</span></p>
+            </div>
+
+            <div class="board-wrap">
+              <div class="board" id="board" role="group" aria-label="Tic-tac-toe board">
+                <button class="cell" type="button" data-index="0" aria-label="Row 1, column 1, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="1" aria-label="Row 1, column 2, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="2" aria-label="Row 1, column 3, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="3" aria-label="Row 2, column 1, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="4" aria-label="Row 2, column 2, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="5" aria-label="Row 2, column 3, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="6" aria-label="Row 3, column 1, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="7" aria-label="Row 3, column 2, empty"><span aria-hidden="true"></span></button>
+                <button class="cell" type="button" data-index="8" aria-label="Row 3, column 3, empty"><span aria-hidden="true"></span></button>
+              </div>
+            </div>
+
+            <div class="game-footer">
+              <p class="game-status" id="game-status" role="status" aria-live="polite">A clean sheet. X starts.</p>
+              <button class="rematch-button" id="rematch" type="button"><svg class="refresh-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.7 8A7 7 0 0 0 4 5.2L2.5 7M2.5 7V3.5M2.5 7H6M3.3 12A7 7 0 0 0 16 14.8l1.5-1.8M17.5 13v3.5m0-3.5H14" /></svg> New round</button>
+            </div>
+          </div>
+
+          <aside class="score-panel" aria-label="Score and game settings">
+            <div class="score-heading">
+              <h2>The tally</h2>
+              <span class="score-season" id="score-context">WITH A FRIEND</span>
+            </div>
+            <div class="score-list" aria-live="polite" aria-atomic="true">
+              <div class="score-row" id="x-row" aria-current="true">
+                <span class="score-player"><span class="score-symbol score-x" aria-hidden="true">×</span><span id="x-label">Player X</span></span>
+                <span class="score-number" id="x-score">0</span>
+              </div>
+              <div class="score-row" id="o-row" aria-current="false">
+                <span class="score-player"><span class="score-symbol score-o" aria-hidden="true"></span><span id="o-label">Player O</span></span>
+                <span class="score-number" id="o-score">0</span>
+              </div>
+              <div class="score-row score-draw-row" id="draw-row">
+                <span class="score-player"><span class="draw-symbol" aria-hidden="true">=</span>Draws</span>
+                <span class="score-number" id="draw-score">0</span>
+              </div>
+            </div>
+
+            <div class="settings">
+              <div class="setting-block">
+                <p class="setting-label" id="mode-label">Play against</p>
+                <div class="segmented-control" role="group" aria-labelledby="mode-label">
+                  <button class="segment-button is-active" type="button" data-mode="local" aria-pressed="true">Player vs Player</button>
+                  <button class="segment-button" type="button" data-mode="computer" aria-pressed="false">Player vs Computer</button>
+                </div>
+              </div>
+
+              <div class="setting-block difficulty-setting" id="difficulty-setting" hidden>
+                <p class="setting-label" id="difficulty-label">Difficulty</p>
+                <div class="segmented-control difficulty-control" role="group" aria-labelledby="difficulty-label">
+                  <button class="segment-button is-active" type="button" data-difficulty="easy" aria-pressed="true">Easy</button>
+                  <button class="segment-button" type="button" data-difficulty="medium" aria-pressed="false">Medium</button>
+                  <button class="segment-button" type="button" data-difficulty="hard" aria-pressed="false">Hard</button>
+                </div>
+              </div>
+            </div>
+
+            <button class="reset-button" id="reset-scores" type="button">Reset score</button>
+            <p class="score-footnote">The score stays on this device.</p>
+          </aside>
+        </section>
+
+        <section class="about-section" aria-labelledby="about-title">
+          <div class="about-heading">
+            <h2 id="about-title">About me</h2>
+            <p class="about-name">Zabeeh Ullah</p>
+            <img class="about-portrait" src="zabeeh-cv-profile.jpg" alt="Portrait of Zabeeh Ullah" loading="lazy" decoding="async">
+          </div>
+          <div class="about-details">
+            <p>I am a Computer Science student at City University of Science &amp; Information Technology, learning web development through projects with HTML, CSS, JavaScript, and WordPress.</p>
+            <nav class="about-links" aria-label="More about Zabeeh">
+              <a href="https://zabeeh-ullah.netlify.app/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+              <a href="https://zabeeh-ullah-dev.github.io/zabeeh-ullah-cv/" target="_blank" rel="noopener noreferrer">CV</a>
+              <a href="https://www.linkedin.com/in/zabeeh-ullah-1b6094382/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/Zabeeh-Ullah-Dev" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </body>
+</html>
